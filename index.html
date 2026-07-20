@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petra - The rock, reimagined.</title>
+  <meta name="description" content="Petra. Our most advanced rock yet. Engineered density. Timeless silence. From $999." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="Petra home">
+        <svg width="18" height="22" viewBox="0 0 18 22" fill="currentColor" aria-hidden="true">
+          <path d="M9 0C6.5 0 4.2 1.6 3.1 3.8c-1.4 2.8-.6 6.2 1.9 8.1L9 15.5l4-3.6c2.5-1.9 3.3-5.3 1.9-8.1C13.8 1.6 11.5 0 9 0zm0 2.2c1.5 0 2.9.9 3.5 2.2.9 1.8.4 4-1.2 5.2L9 11.8 5.7 9.6C4.1 8.4 3.6 6.2 4.5 4.4 5.1 3.1 6.5 2.2 9 2.2zM4.8 14.2c-1.2.6-2 1.6-2 2.8 0 1.9 2.7 3.5 6.2 3.5s6.2-1.6 6.2-3.5c0-1.2-.8-2.2-2-2.8l-1.2 1.1c.6.3 1 .8 1 1.4 0 .9-1.7 1.8-4 1.8s-4-.9-4-1.8c0-.6.4-1.1 1-1.4l-1.2-1.1z"/>
+        </svg>
+        <span>Petra</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#store">Store</a>
+        <a href="#petra">Petra</a>
+        <a href="#air">Petra Air</a>
+        <a href="#pro">Petra Pro</a>
+        <a href="#ultra">Ultra</a>
+        <a href="#compare">Compare</a>
+        <a href="#support">Support</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn" aria-label="Search" type="button">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14 14"/></svg>
+        </button>
+        <button class="icon-btn" aria-label="Bag" type="button">
+          <svg width="15" height="16" viewBox="0 0 15 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1h1.5l1.2 8.2a1.5 1.5 0 001.5 1.3h6.3a1.5 1.5 0 001.5-1.2L14 5H4"/><circle cx="6" cy="14.2" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="14.2" r="1" fill="currentColor" stroke="none"/></svg>
+        </button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu" type="button">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#store">Store</a>
+    <a href="#petra">Petra</a>
+    <a href="#air">Petra Air</a>
+    <a href="#pro">Petra Pro</a>
+    <a href="#ultra">Ultra</a>
+    <a href="#compare">Compare</a>
+    <a href="#support">Support</a>
+  </div>
+
+  <main>
+    <section class="hero" id="store">
+      <div class="hero-canvas-wrap" aria-hidden="true">
+        <canvas id="heroCanvas"></canvas>
+        <div class="hero-glow"></div>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">New</p>
+        <h1>Petra</h1>
+        <p class="tagline">The rock, reimagined.</p>
+        <p class="sub">Our densest rock yet. CNC-milled from a single mountain. Engineered to do absolutely nothing - flawlessly.</p>
+        <div class="cta-row">
+          <a class="btn-link" href="#buy">Learn more</a>
+          <a class="btn-link accent" href="#buy">Buy</a>
+        </div>
+        <p class="price-line">From $999 or $41.62/mo. for 24 mo.*</p>
+      </div>
+      <p class="drag-hint" id="dragHint">Drag to rotate · Scroll to explore</p>
+    </section>
+
+    <section class="feature-band">
+      <div class="feature-band-inner">
+        <div class="feature-item">
+          <strong>A19 Chip</strong>
+          <span>Not in the rock. Just vibes.</span>
+        </div>
+        <div class="feature-item">
+          <strong>47-hour stillness</strong>
+          <span>Industry-leading inactivity.</span>
+        </div>
+        <div class="feature-item">
+          <strong>Titanium flecks</strong>
+          <span>Aerospace-grade looking cool.</span>
+        </div>
+        <div class="feature-item">
+          <strong>IP68 dustproof</strong>
+          <span>It is dust. Circular.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="product-block dark" id="petra">
+      <div class="product-copy">
+        <p class="eyebrow light">Petra</p>
+        <h2>Hello, density.</h2>
+        <p class="lede">A revolutionary rock so advanced, it sits still in six beautiful finishes - including Midnight, Starlight, and the all-new Glacier Grey.</p>
+        <div class="cta-row">
+          <a class="btn-link light" href="#buy">Learn more</a>
+          <a class="btn-link light accent" href="#buy">Buy</a>
+        </div>
+      </div>
+      <div class="product-visual">
+        <canvas id="petraCanvas" class="product-canvas"></canvas>
+      </div>
+    </section>
+
+    <section class="product-block light" id="air">
+      <div class="product-visual">
+        <canvas id="airCanvas" class="product-canvas"></canvas>
+      </div>
+      <div class="product-copy">
+        <p class="eyebrow">Petra Air</p>
+        <h2>Light as a... no.</h2>
+        <p class="lede">We hollowed out a mountain so you could hold slightly less mountain. Same silence. 18% less commitment to physics.</p>
+        <div class="cta-row">
+          <a class="btn-link" href="#buy">Learn more</a>
+          <a class="btn-link accent" href="#buy">Buy</a>
+        </div>
+        <p class="price-line muted">From $799</p>
+      </div>
+    </section>
+
+    <section class="product-block dark" id="pro">
+      <div class="product-copy">
+        <p class="eyebrow light">Petra Pro</p>
+        <h2>Pro. For professionals who sit.</h2>
+        <p class="lede">Ceramic Shield. Always-on stillness. Action Button that does nothing when you press it. Designed for people who demand more from less.</p>
+        <div class="cta-row">
+          <a class="btn-link light" href="#buy">Learn more</a>
+          <a class="btn-link light accent" href="#buy">Buy</a>
+        </div>
+        <p class="price-line light-muted">From $1,499</p>
+      </div>
+      <div class="product-visual">
+        <canvas id="proCanvas" class="product-canvas"></canvas>
+      </div>
+    </section>
+
+    <section class="ultra" id="ultra">
+      <div class="ultra-bg">
+        <canvas id="ultraCanvas"></canvas>
+      </div>
+      <div class="ultra-copy">
+        <p class="eyebrow light">Petra Ultra</p>
+        <h2>Titanium. Tungsten. Denial.</h2>
+        <p class="lede">Our heaviest rock. Forged for those who refuse to lift anything lighter. Includes Freeform sitting and a year of Rock+.</p>
+        <div class="cta-row">
+          <a class="btn-primary" href="#buy">Buy Ultra - $2,999</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="why" id="compare">
+      <div class="why-header">
+        <h2>Why Petra.</h2>
+        <p>Every gram is intentional. Every silence, designed.</p>
+      </div>
+      <div class="why-grid">
+        <article class="why-card span-2">
+          <div class="why-card-visual v-chip"></div>
+          <h3>The A19-adjacent experience</h3>
+          <p>No processor. No RAM. Just pure, uncompromising geology with the confidence of a chip keynote.</p>
+        </article>
+        <article class="why-card">
+          <div class="why-card-visual v-camera"></div>
+          <h3>48MP stillness</h3>
+          <p>It looks good from every angle. Especially the ones where it is not moving.</p>
+        </article>
+        <article class="why-card">
+          <div class="why-card-visual v-battery"></div>
+          <h3>All-day sitting</h3>
+          <p>And all-night. And all-weekend. Battery anxiety is for devices that do things.</p>
+        </article>
+        <article class="why-card span-2">
+          <div class="why-card-visual v-color"></div>
+          <h3>Six finishes. Zero function.</h3>
+          <p>Midnight. Starlight. Glacier Grey. Desert Sand. Alpine Green. Product Red (still a rock).</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="specs" id="buy">
+      <div class="specs-inner">
+        <h2>Which Petra is right for you?</h2>
+        <div class="compare-table" role="table" aria-label="Product comparison">
+          <div class="compare-row head" role="row">
+            <div role="columnheader"></div>
+            <div role="columnheader">Petra</div>
+            <div role="columnheader">Air</div>
+            <div role="columnheader">Pro</div>
+            <div role="columnheader">Ultra</div>
+          </div>
+          <div class="compare-row" role="row">
+            <div role="rowheader">Starting at</div>
+            <div>$999</div>
+            <div>$799</div>
+            <div>$1,499</div>
+            <div>$2,999</div>
+          </div>
+          <div class="compare-row" role="row">
+            <div role="rowheader">Weight</div>
+            <div>1.2 kg</div>
+            <div>0.98 kg</div>
+            <div>1.45 kg</div>
+            <div>3.8 kg</div>
+          </div>
+          <div class="compare-row" role="row">
+            <div role="rowheader">Stillness engine</div>
+            <div>A18-class vibes</div>
+            <div>A17 vibes</div>
+            <div>A19 Pro vibes</div>
+            <div>A19 Ultra vibes</div>
+          </div>
+          <div class="compare-row" role="row">
+            <div role="rowheader">Does anything</div>
+            <div>No</div>
+            <div>No</div>
+            <div>No</div>
+            <div>Emphatically no</div>
+          </div>
+          <div class="compare-row" role="row">
+            <div role="rowheader">Action Button</div>
+            <div>-</div>
+            <div>-</div>
+            <div>Yes (decorative)</div>
+            <div>Yes (titanium)</div>
+          </div>
+          <div class="compare-row cta-row-table" role="row">
+            <div></div>
+            <div><a class="btn-pill" href="#">Buy</a></div>
+            <div><a class="btn-pill" href="#">Buy</a></div>
+            <div><a class="btn-pill" href="#">Buy</a></div>
+            <div><a class="btn-pill" href="#">Buy</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-block">
+      <blockquote>
+        <p>"I put it on my desk. My productivity is unchanged. My desk is heavier. Five stars."</p>
+        <footer>- Definitely a real customer</footer>
+      </blockquote>
+    </section>
+
+    <section class="support" id="support">
+      <div class="support-grid">
+        <div>
+          <h3>RockCare+</h3>
+          <p>Accidental drop protection for a product that wants to be dropped. From $9.99/mo.</p>
+          <a class="btn-link accent" href="#">Learn more</a>
+        </div>
+        <div>
+          <h3>Trade in</h3>
+          <p>Give us your old rock. We'll pretend to appraise it. You get $12 toward a new one.</p>
+          <a class="btn-link accent" href="#">Get estimate</a>
+        </div>
+        <div>
+          <h3>Personal Setup</h3>
+          <p>A Specialist will place your rock on a surface of your choosing. Complimentary.</p>
+          <a class="btn-link accent" href="#">Book a session</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-disclaimer">* Monthly pricing is available when you select RockCard Monthly Installments at checkout. Petra and the pebble mark are trademarks of Petra Inc. This is a parody site. No rocks were overpriced in the making of this page - wait, all of them were.</p>
+      <div class="footer-cols">
+        <div>
+          <h4>Shop and Learn</h4>
+          <a href="#petra">Petra</a>
+          <a href="#air">Petra Air</a>
+          <a href="#pro">Petra Pro</a>
+          <a href="#ultra">Petra Ultra</a>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <a href="#">Rock+</a>
+          <a href="#">RockCare+</a>
+          <a href="#">Stillness One</a>
+        </div>
+        <div>
+          <h4>Petra Store</h4>
+          <a href="#">Find a Store</a>
+          <a href="#">Genius Bar (rocks)</a>
+          <a href="#">Order Status</a>
+        </div>
+        <div>
+          <h4>About Petra</h4>
+          <a href="#">Newsroom</a>
+          <a href="#">Leadership</a>
+          <a href="#">Career Opportunities</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>Copyright © 2026 Petra Inc. All rights reserved. Parody. Not affiliated with Apple Inc.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Sales and Refunds</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Added to bag. Your rock will sit patiently.</div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.172.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.172.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
