@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { rockVertex } from "./lib/geometry.js";
 import { createMenuController } from "./lib/menu.js";
+import { createFinishPicker } from "./lib/picker.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -182,6 +183,8 @@ if (heroCanvas) {
   heroCanvas.addEventListener("pointerdown", hideHint, { once: true });
   setTimeout(hideHint, 6000);
   window.__hero = hero;
+  const finishPicker = document.getElementById("finishPicker");
+  if (finishPicker) createFinishPicker({ root: finishPicker, scene: hero });
 }
 
 if (petraCanvas) {
