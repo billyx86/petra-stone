@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { rockVertex } from "./lib/geometry.js";
+import { createMenuController } from "./lib/menu.js";
+import { createFinishPicker } from "./lib/picker.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -10,14 +13,8 @@ function makeStoneGeometry(detail = 1) {
   for (let i = 0; i < pos.count; i++) {
     v.fromBufferAttribute(pos, i);
     const n = v.clone().normalize();
-    const warp =
-      0.12 * Math.sin(n.x * 4.2) * Math.cos(n.y * 3.1) +
-      0.08 * Math.sin(n.z * 5.5 + n.x * 2) +
-      0.05 * Math.cos(n.y * 7.3);
-    v.addScaledVector(n, warp);
-    v.y *= 0.78;
-    v.x *= 1.08;
-    pos.setXYZ(i, v.x, v.y, v.z);
+    const p = rockVertex(n.x, n.y, n.z);
+    pos.setXYZ(i, p.x, p.y, p.z);
   }
   geo.computeVertexNormals();
   return geo;
@@ -186,6 +183,8 @@ if (heroCanvas) {
   heroCanvas.addEventListener("pointerdown", hideHint, { once: true });
   setTimeout(hideHint, 6000);
   window.__hero = hero;
+  const finishPicker = document.getElementById("finishPicker");
+  if (finishPicker) createFinishPicker({ root: finishPicker, scene: hero });
 }
 
 if (petraCanvas) {
@@ -231,21 +230,13 @@ if (ultraCanvas) {
   });
 }
 
-/* Mobile menu */
+/* Mobile menu (full behaviour lives in lib/menu.js) */
 const menuToggle = document.getElementById("menuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
-menuToggle?.addEventListener("click", () => {
-  const open = mobileMenu?.classList.toggle("open");
-  menuToggle.classList.toggle("open", open);
-  document.body.style.overflow = open ? "hidden" : "";
-});
-mobileMenu?.querySelectorAll("a").forEach((a) => {
-  a.addEventListener("click", () => {
-    mobileMenu.classList.remove("open");
-    menuToggle?.classList.remove("open");
-    document.body.style.overflow = "";
-  });
-});
+const menuCtrl = menuToggle && mobileMenu
+  ? createMenuController({ toggle: menuToggle, panel: mobileMenu })
+  : null;
+menuCtrl?.bind();
 
 /* Buy toast */
 const toast = document.getElementById("toast");
