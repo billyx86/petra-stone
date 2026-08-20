@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { rockVertex } from "./lib/geometry.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -10,14 +11,8 @@ function makeStoneGeometry(detail = 1) {
   for (let i = 0; i < pos.count; i++) {
     v.fromBufferAttribute(pos, i);
     const n = v.clone().normalize();
-    const warp =
-      0.12 * Math.sin(n.x * 4.2) * Math.cos(n.y * 3.1) +
-      0.08 * Math.sin(n.z * 5.5 + n.x * 2) +
-      0.05 * Math.cos(n.y * 7.3);
-    v.addScaledVector(n, warp);
-    v.y *= 0.78;
-    v.x *= 1.08;
-    pos.setXYZ(i, v.x, v.y, v.z);
+    const p = rockVertex(n.x, n.y, n.z);
+    pos.setXYZ(i, p.x, p.y, p.z);
   }
   geo.computeVertexNormals();
   return geo;
