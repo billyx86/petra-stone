@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { rockVertex } from "./lib/geometry.js";
+import { createMenuController } from "./lib/menu.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -226,21 +227,13 @@ if (ultraCanvas) {
   });
 }
 
-/* Mobile menu */
+/* Mobile menu (full behaviour lives in lib/menu.js) */
 const menuToggle = document.getElementById("menuToggle");
 const mobileMenu = document.getElementById("mobileMenu");
-menuToggle?.addEventListener("click", () => {
-  const open = mobileMenu?.classList.toggle("open");
-  menuToggle.classList.toggle("open", open);
-  document.body.style.overflow = open ? "hidden" : "";
-});
-mobileMenu?.querySelectorAll("a").forEach((a) => {
-  a.addEventListener("click", () => {
-    mobileMenu.classList.remove("open");
-    menuToggle?.classList.remove("open");
-    document.body.style.overflow = "";
-  });
-});
+const menuCtrl = menuToggle && mobileMenu
+  ? createMenuController({ toggle: menuToggle, panel: mobileMenu })
+  : null;
+menuCtrl?.bind();
 
 /* Buy toast */
 const toast = document.getElementById("toast");

@@ -36,14 +36,14 @@
         <button class="icon-btn" aria-label="Bag" type="button">
           <svg width="15" height="16" viewBox="0 0 15 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1 1h1.5l1.2 8.2a1.5 1.5 0 001.5 1.3h6.3a1.5 1.5 0 001.5-1.2L14 5H4"/><circle cx="6" cy="14.2" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="14.2" r="1" fill="currentColor" stroke="none"/></svg>
         </button>
-        <button class="menu-toggle" id="menuToggle" aria-label="Menu" type="button">
+        <button class="menu-toggle" id="menuToggle" aria-label="Menu" aria-controls="mobileMenu" aria-expanded="false" type="button">
           <span></span><span></span>
         </button>
       </div>
     </div>
   </header>
 
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Site menu" aria-hidden="true">
     <a href="#store">Store</a>
     <a href="#petra">Petra</a>
     <a href="#air">Petra Air</a>
