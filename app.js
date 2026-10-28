@@ -3,6 +3,11 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { rockVertex } from "./lib/geometry.js";
 import { createMenuController } from "./lib/menu.js";
 import { createFinishPicker } from "./lib/picker.js";
+import {
+  detectWebGL,
+  renderFallback,
+  installContextLossHandlers,
+} from "./lib/webgl.js";
 
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -163,7 +168,71 @@ function createScene(canvas, options = {}) {
   };
 }
 
-/* Mount 3D scenes */
+/* Mount 3D scenes — with a graceful WebGL fallback (issue #9).
+ *
+ * Without WebGL (or when the renderer throws — broken drivers and mobile
+ * GPUs that lie about support), the page keeps working: each canvas becomes
+ * a labelled static placeholder and the rest of the site behaves normally.
+ * If a context is lost mid-session and does not recover, the same swap
+ * happens for that scene. */
+const webglAvailable = detectWebGL();
+
+const FALLBACK_TEXT = {
+  unavailable: {
+    title: "3D preview unavailable",
+    detail:
+      "Your browser could not start WebGL, so here is a very good drawing of the rock instead. Everything else works perfectly.",
+  },
+  lost: {
+    title: "3D preview lost",
+    detail:
+      "The WebGL context dropped and did not come back. Here is a very good drawing of the rock instead.",
+  },
+};
+
+function showFallback(canvas, text, variant) {
+  const parent = canvas && canvas.parentElement;
+  if (!parent) return;
+  canvas.style.visibility = "hidden"; // keep layout, hide the dead canvas
+  renderFallback(parent, { ...text, variant });
+}
+
+function mountScene(canvas, options, variant) {
+  if (!canvas) return null;
+  if (!webglAvailable) {
+    showFallback(canvas, FALLBACK_TEXT.unavailable, variant);
+    return null;
+  }
+
+  let handle;
+  try {
+    handle = createScene(canvas, options);
+  } catch (err) {
+    // getContext() can succeed while renderer creation still throws.
+    console.warn("WebGL scene failed to start; showing fallback", err);
+    showFallback(canvas, FALLBACK_TEXT.unavailable, variant);
+    return null;
+  }
+
+  // three.js listens for webglcontextlost/restored itself and re-initialises
+  // on restore. We only need to notice when a loss never recovers: start a
+  // grace timer on loss, cancel it on restore, swap in the placeholder if
+  // it expires.
+  let graceTimer = 0;
+  const unsubscribe = installContextLossHandlers(canvas, () => {
+    graceTimer = setTimeout(() => {
+      console.warn("WebGL context was not restored; showing fallback");
+      unsubscribe();
+      canvas.removeEventListener("webglcontextrestored", onRestored);
+      handle.dispose();
+      showFallback(canvas, FALLBACK_TEXT.lost, variant);
+    }, 2500);
+  });
+  const onRestored = () => clearTimeout(graceTimer);
+  canvas.addEventListener("webglcontextrestored", onRestored);
+  return handle;
+}
+
 const heroCanvas = document.getElementById("heroCanvas");
 const petraCanvas = document.getElementById("petraCanvas");
 const airCanvas = document.getElementById("airCanvas");
@@ -171,55 +240,78 @@ const proCanvas = document.getElementById("proCanvas");
 const ultraCanvas = document.getElementById("ultraCanvas");
 
 if (heroCanvas) {
-  const hero = createScene(heroCanvas, {
-    color: 0xb0b6c0,
-    scale: 1.45,
-    detail: 4,
-    cameraZ: 3.4,
-    autoRotate: true,
-  });
+  const hero = mountScene(
+    heroCanvas,
+    {
+      color: 0xb0b6c0,
+      scale: 1.45,
+      detail: 4,
+      cameraZ: 3.4,
+      autoRotate: true,
+    },
+    "dark"
+  );
   const hint = document.getElementById("dragHint");
-  const hideHint = () => hint?.classList.add("hidden");
-  heroCanvas.addEventListener("pointerdown", hideHint, { once: true });
-  setTimeout(hideHint, 6000);
+  if (!hero) {
+    // Nothing to drag — remove the hint entirely.
+    hint?.remove();
+  } else {
+    const hideHint = () => hint?.classList.add("hidden");
+    heroCanvas.addEventListener("pointerdown", hideHint, { once: true });
+    setTimeout(hideHint, 6000);
+  }
   window.__hero = hero;
   const finishPicker = document.getElementById("finishPicker");
-  if (finishPicker) createFinishPicker({ root: finishPicker, scene: hero });
+  if (finishPicker) {
+    // The picker stays usable without WebGL — it simply can't tint a scene
+    // that does not exist.
+    createFinishPicker({
+      root: finishPicker,
+      scene: hero ?? { setColor() {} },
+    });
+  }
 }
 
-if (petraCanvas) {
-  createScene(petraCanvas, {
+mountScene(
+  petraCanvas,
+  {
     color: 0x6b7280,
     scale: 1.25,
     detail: 3,
     enableOrbit: false,
     cameraZ: 3.0,
-  });
-}
+  },
+  "dark"
+);
 
-if (airCanvas) {
-  createScene(airCanvas, {
+mountScene(
+  airCanvas,
+  {
     color: 0xd4d4d8,
     scale: 1.1,
     detail: 3,
     enableOrbit: false,
     cameraZ: 3.1,
     lightIntensity: 1.15,
-  });
-}
+  },
+  "light"
+);
 
-if (proCanvas) {
-  createScene(proCanvas, {
+mountScene(
+  proCanvas,
+  {
     color: 0x3f3f46,
     scale: 1.3,
     detail: 4,
     enableOrbit: false,
     cameraZ: 3.0,
-  });
-}
+  },
+  "dark"
+);
 
-if (ultraCanvas) {
-  createScene(ultraCanvas, {
+mountScene(
+  ultraCanvas,
+  {
     color: 0xc0c5ce,
     scale: 1.7,
     detail: 4,
@@ -227,8 +319,9 @@ if (ultraCanvas) {
     cameraZ: 3.8,
     autoRotate: true,
     lightIntensity: 1.25,
-  });
-}
+  },
+  "dark"
+);
 
 /* Mobile menu (full behaviour lives in lib/menu.js) */
 const menuToggle = document.getElementById("menuToggle");

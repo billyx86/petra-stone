@@ -77,6 +77,16 @@ describe("renderFallback", () => {
     expect(parent.classList.contains("webgl-fallback")).toBe(true);
   });
 
+  it("applies a variant class matching the section background, switchable", () => {
+    renderFallback(parent, { title: "t", detail: "d" });
+    expect(parent.classList.contains("webgl-fallback-light")).toBe(true);
+    expect(parent.classList.contains("webgl-fallback-dark")).toBe(false);
+
+    renderFallback(parent, { title: "t", detail: "d", variant: "dark" });
+    expect(parent.classList.contains("webgl-fallback-dark")).toBe(true);
+    expect(parent.classList.contains("webgl-fallback-light")).toBe(false);
+  });
+
   it("does not stack placeholders when called twice", () => {
     renderFallback(parent, { title: "first", detail: "d" });
     renderFallback(parent, { title: "second", detail: "d" });
